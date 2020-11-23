@@ -2,6 +2,6 @@
 Simple Forum App
 # instructions
 To start the application, go to project's folder and run:
-  npm install
+    npm install
 to install required libraries, and then run:
-  npm start
+    npm start
