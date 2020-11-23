@@ -6,6 +6,7 @@ import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
 import './App.scss';
 
 let username = localStorage.getItem('username') ? localStorage.getItem('username') : '';
+let currentPosts = localStorage.getItem('currentPosts') ? JSON.parse(localStorage.getItem('currentPosts')) : [];
 
 function App() {
 
@@ -48,9 +49,13 @@ function App() {
     },
   ];
 
+  if(currentPosts.length === 0){
+    currentPosts = testPosts;
+  }
+
   const [userName, setUserName] = React.useState(username);
   const [isUserSet, setIsUserSet] = React.useState(username !== '');
-  const [posts, setPosts] = React.useState(testPosts);
+  const [posts, setPosts] = React.useState(currentPosts);
 
 
   const editor = React.useRef(null);
@@ -85,12 +90,14 @@ function App() {
       alert('You must enter some post content');
       return;
     }
-    setPosts(elements=>[...elements,{
-      id:elements.length-1,
+    let newPosts = [...posts,{
+      id:posts.length,
       content:currentPostContent,
       created_by:userName,
       comments:[],
-    }])
+    }]
+    setPosts(newPosts)
+    localStorage.setItem('currentPosts',JSON.stringify(newPosts));
     setCurrentPostContent('');
   }
 
@@ -125,7 +132,7 @@ function App() {
     newPosts = newPosts.map(post=>{
       if(post.id===id){
         post.comments = [...post.comments,{
-          id:post.comments.length-1,
+          id:post.comments.length,
           content:post.currentCommentText,
           created_by:userName,
         }];
