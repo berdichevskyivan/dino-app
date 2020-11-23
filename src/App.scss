@@ -1,0 +1,11 @@
+.flexAndCentered {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.App {
+  @extend .flexAndCentered;
+  height:100%;
+  width:100%;
+}
